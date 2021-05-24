@@ -120,26 +120,28 @@
                                  space :align-to left))
                   face (:overline nil))
      "%e"
-     Z572-1-modeline-left
-     (:eval
-      (let ((a (format-mode-line
-                Z572-1-modeline-center 'mode-line-buffer-id)))
-        (concat
-         (propertize " " 'display `((space
-                                     :align-to
-                                     (- center ,(/ (string-width a) 2.0)))))
-         (propertize a 'face '(mode-line-buffer-id
-                               (:overline t))))))
-     (:eval (let ((a (format-mode-line Z572-1-modeline-right)))
-              (concat (propertize
-                       " " 'display
-                       `((space
-                          :align-to (- right ,(string-width a)))))
-                      a)))
-     " "
+     (Z572-1-modeline-left Z572-1-modeline-left)
+     (Z572-1-modeline-center
+      (:eval
+       (let ((a (format-mode-line
+                 Z572-1-modeline-center 'mode-line-buffer-id)))
+         (concat
+          (propertize " " 'display `((space
+                                      :align-to
+                                      (- center ,(/ (string-width a) 2.0)))))
+          (propertize a 'face '(mode-line-buffer-id
+                                (:overline t)))))))
+     (:eval (if Z572-1-modeline-right
+                (let ((a (format-mode-line Z572-1-modeline-right)))
+                  (concat (propertize
+                           " " 'display
+                           `((space
+                              :align-to (- right ,(string-width a)))))
+                          a))
+              '(:propertize " " display ((space :align-to right)))))
+
      (:eval (when (<= (/ (display-pixel-width) 1.5) (window-pixel-width))
-              '(:propertize "%-" face Z572-1-mode-line-over)))
-     ))
+              '(:propertize " %-" face Z572-1-mode-line-over)))))
  '(eldoc-message-function #'Z572-1-eldoc-message))
 
 (apply #'custom-theme-set-faces
