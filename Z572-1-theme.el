@@ -523,4 +523,9 @@
             :background "#cacaca" :underline t)
            (t :background "#404040" :underline t)))))
 
+;;;###autoload
+(when (and (boundp 'custom-theme-load-path) load-file-name)
+  (let ((base (file-name-directory load-file-name)))
+    (add-to-list 'custom-theme-load-path base)))
+
 (provide-theme 'Z572-1)
